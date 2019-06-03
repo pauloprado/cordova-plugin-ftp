@@ -50,7 +50,7 @@ public class CDVFtp extends CordovaPlugin {
             cordova.getThreadPool().execute(new Runnable() {
                 public void run() {
                     try {
-                        connect(args.getString(0), args.getString(1), args.getString(2), callbackContext);
+                        connect(args.getString(0), args.getString(1), args.getString(2), args.getBoolean(3, false), callbackContext);
                     } catch (Exception e) {
                         callbackContext.error(e.toString());
                     }
@@ -144,7 +144,7 @@ public class CDVFtp extends CordovaPlugin {
         return true;
     }
 
-    private void connect(String hostname, String username, String password, CallbackContext callbackContext) {
+    private void connect(String hostname, String username, String password, boolean ftps, CallbackContext callbackContext) {
         if (hostname == null || hostname.length() <= 0)
         {
             callbackContext.error("Expected hostname.");
@@ -159,6 +159,9 @@ public class CDVFtp extends CordovaPlugin {
 
             try {
                 this.client = new FTPClient();
+                if(ftps){
+                    this.client.setSecurity(FTPClient.SECURITY_FTPS);
+                }
                 String[] address = hostname.split(":");
                 if (address.length == 2) {
                     String host = address[0];
