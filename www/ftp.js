@@ -178,6 +178,13 @@ Ftp.prototype.cancel = function(successCallback, errorCallback) {
         "cancelAllRequests", []);
 };
 
+Ftp.prototype.isConnected = function(successCallback, errorCallback) {
+    exec(successCallback,
+        errorCallback,
+        "Ftp",
+        "isConnected", []);
+};
+
 /**
  * Disconnect from ftp server.
  *

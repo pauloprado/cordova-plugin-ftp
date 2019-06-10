@@ -136,6 +136,16 @@ public class CDVFtp extends CordovaPlugin {
                     }
                 }
             });
+        } else if (action.equals("isConnected")){
+            cordova.getThreadPool().execute(new Runnable() {
+                public void run() {
+                    try {
+                        isConnected(callbackContext);
+                    } catch (Exception e) {
+                        callbackContext.error(e.toString());
+                    }
+                }
+            });
         } else {
             // This action/cmd is not found/supported
             return false;
@@ -345,6 +355,19 @@ public class CDVFtp extends CordovaPlugin {
             // `false` to break the connection without advice.
             this.client.disconnect(true);
             callbackContext.success("Disconnect OK.");
+        } catch (Exception e) {
+            callbackContext.error(e.toString());
+        }
+    }
+
+
+    private void isConnected(CallbackContext callbackContext) {
+        try {
+            if(this.client.isConnected()){
+                callbackContext.success("Device connected.");
+            }else{
+                callbackContext.success("Device not connected.");
+            }
         } catch (Exception e) {
             callbackContext.error(e.toString());
         }
