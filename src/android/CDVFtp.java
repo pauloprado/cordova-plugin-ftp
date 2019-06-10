@@ -178,7 +178,7 @@ public class CDVFtp extends CordovaPlugin {
             }
 
             try {
-
+                System.out.println("TEST_HANDSHAKE");
                 TrustManager[] trustManager = new TrustManager[] { new X509TrustManager() {
                     public X509Certificate[] getAcceptedIssuers() {
                         return null;
@@ -197,12 +197,15 @@ public class CDVFtp extends CordovaPlugin {
                 } catch (KeyManagementException e) {
                     e.printStackTrace();
                 }
+                System.out.println("TEST_HANDSHAKE 2");
                 SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
                 this.client = new FTPClient();
                 // if(ftps){
                     this.client.setSSLSocketFactory(sslSocketFactory);
                     this.client.setSecurity(FTPClient.SECURITY_FTPS);
                 // }
+                System.out.println("TEST_HANDSHAKE 3");
+
                 String[] address = hostname.split(":");
                 if (address.length == 2) {
                     String host = address[0];
